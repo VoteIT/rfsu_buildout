@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head></head>
+<body id="print-friendly">
+<div class="print-hidden text-center">
+  <b>
+    <span tal:content="len(proposals)" />
+    valda förslag
+  </b>
+  <div>
+      Varje förslag skrivs ut på egen sida. Den här texten kommer inte med i utskriften.
+  </div>
+  <a href="javascript:window.print()"
+     class="btn btn-default">Skriv ut</a>
+  <a href="${request.resource_url(context)}"
+     class="btn btn-default">Tillbaka</a>
+</div>
+<tal:iterate repeat="prop proposals">
+  <div>
+    <img id="rfsulogo" src="${request.static_url('rfsu_app:static/logo.jpg')}" />
+    <h1>Förslag</h1>
+    <p><b>#${prop.aid}</b></p>
+
+    <div class="row">
+      <div class="col-xs-6 print-header">Från:</div>
+      <div class="col-xs-6 print-text">
+        ${structure: request.creators_info(prop.creator, portrait = False, no_tag = True)}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 print-header">Dagordningspunkt:</div>
+      <div class="col-xs-6 print-text">
+        ${request.agenda_item.title}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 print-header">Utskriven:</div>
+      <div class="col-xs-6 print-text">
+        ${now}
+      </div>
+    </div>
+
+    <div class="print-proposal-text">
+      ${structure: nl2br(prop.text)}
+    </div>
+
+    <h3>Vi stödjer:</h3>
+
+    <div class="row">
+      <div tal:repeat="x range(21)" class="col-xs-4">
+        <hr/>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-break"><!-- --></div>
+</tal:iterate>
+</body>
+</html>

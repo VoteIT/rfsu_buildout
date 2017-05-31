@@ -1,0 +1,3 @@
+[run]
+source = rfsu_app
+omit = rfsu_app/test*
